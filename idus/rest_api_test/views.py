@@ -107,15 +107,5 @@ class memberSearch(View):
                          })
 
 
-    # def post(self, request):
-    #     name = request.POST['name']
-    #     data = Member.objects.filter(name=name)
-    #     res = json.loads(serialize('json', data))
-    #     return JsonResponse({
-    #         'status' : 'OK',
-    #         'message' : '요청에 성공 하셨습니다.',
-    #         'result': res     
-    #                      })
-
 
 
