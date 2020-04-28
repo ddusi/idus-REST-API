@@ -12,8 +12,7 @@ class IndexView(View):
         return JsonResponse({
             'status' : 'OK',
             'message' : '요청에 성공 하셨습니다.',
-            'result': res
-                            
+            'result': res     
                         })
 
     def post(self, request):
@@ -45,6 +44,7 @@ class IndexView(View):
     #     data.phone = phone
     #     data.save()
     #     return HttpResponse(status=200)
+
     def put(self, request):
         if request.META['CONTENT_TYPE'] == "application/json":
             request = json.loads(request.body)
@@ -65,13 +65,57 @@ class IndexView(View):
         data = get_object_or_404(Member, pk=id)
         data.delete()
         return HttpResponse(status=200)
-    
-    # def delete(self, request):
-    # if request.META['CONTENT_TYPE'] == "application/json":
-    #     request = json.loads(request.body)
-    #     id = request['id']
-    # else:
-    #     id = request.PUT['id']
-    #     data = get_object_or_404(Member, pk=id)
-    #     data.delete()
-    # return HttpResponse(status=200)
+
+
+class memberView(View):
+    def get(self, request, id):
+        data = Member.objects.filter(pk=id)
+        res = json.loads(serialize('json', data))
+        return JsonResponse({
+            'status' : 'OK',
+            'message' : '요청에 성공 하셨습니다.',
+            'result': res 
+                        })
+
+    # def get(self, request, id):
+    #     data = Member.objects.filter(pk=id)
+    #     if data == '':
+    #         return JsonResponse({
+    #         'status' : 'OK',
+    #         'mssage' : '회원정보가 존재하지 않습니다.',
+    #         'result': ''
+    #                     })
+
+    #     else:
+    #         res = json.loads(serialize('json', data))
+    #         return JsonResponse({
+    #             'status' : 'OK',
+    #             'message' : '요청에 성공 하셨습니다.',
+    #             'result': res 
+    #                         })
+
+class memberSearch(View):
+    def get(self, request):
+        name = request.GET.get('name', None)
+        email = request.GET.get('email', None)
+        data = Member.objects.filter(name=name, email=email)
+        res = json.loads(serialize('json', data))
+        return JsonResponse({
+            'status' : 'OK',
+            'message' : '요청에 성공 하셨습니다.',
+            'result': res     
+                         })
+
+
+    # def post(self, request):
+    #     name = request.POST['name']
+    #     data = Member.objects.filter(name=name)
+    #     res = json.loads(serialize('json', data))
+    #     return JsonResponse({
+    #         'status' : 'OK',
+    #         'message' : '요청에 성공 하셨습니다.',
+    #         'result': res     
+    #                      })
+
+
+

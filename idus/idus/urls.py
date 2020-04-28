@@ -7,6 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.main),
     path('signup/', views.signuppage),
-    path('member/<int:id>', views.signup),
-    path('rest-api-test/', include('rest_api_test.urls'))
+    path('member/', include('rest_api_test.urls'))
 ]
