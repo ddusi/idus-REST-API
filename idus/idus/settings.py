@@ -25,7 +25,7 @@ SECRET_KEY = 'eyqipdmxq-r05r+$(rw#9n6ebrinmr=*hr5qaso5kdsf-r_s&_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['e595e25d.ngrok.io']
 
 
 # Application definition
@@ -39,17 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'member',
     'rest_api_test',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'rest_api_test.middlewares.PutParsingMiddleware'
+    'rest_api_test.middlewares.PutParsingMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'idus.urls'
@@ -86,6 +88,10 @@ DATABASES = {
         'PORT': 3306
     }
 }
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Password validation

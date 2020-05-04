@@ -4,8 +4,11 @@ from django.shortcuts import get_object_or_404
 from .models import Member
 import json
 from django.core.serializers import serialize
+from django.views.decorators.csrf import csrf_exempt
+
 
 class IndexView(View):
+    @csrf_exempt
     def get(self, request):
         data = Member.objects.all().order_by('-id')
         res = json.loads(serialize('json', data))
@@ -14,7 +17,8 @@ class IndexView(View):
             'message' : '요청에 성공 하셨습니다.',
             'result': res     
                         })
-
+                        
+    @csrf_exempt
     def post(self, request):
         if request.META['CONTENT_TYPE'] == "application/json":
             request = json.loads(request.body)
@@ -23,16 +27,16 @@ class IndexView(View):
                             user_id = request.POST['user_id'],
                             user_pw = request.POST['user_pw'],
                             phone = request.POST['phone'],
-                            email = request.POST['email'],
-                            gender = request.POST['gender'])
+                            email = request.POST['email'])
+                            # gender = request.POST['gender'])
         else:
             data = Member(name = request.POST['name'],
                             nick_name = request.POST['nick_name'],
                             user_id = request.POST['user_id'],
                             user_pw = request.POST['user_pw'],
                             phone = request.POST['phone'],
-                            email = request.POST['email'],
-                            gender = request.POST['gender'])
+                            email = request.POST['email'])
+                            # gender = request.POST['gender'])
         data.save()
         return HttpResponse(status=200)
 
@@ -44,7 +48,7 @@ class IndexView(View):
     #     data.phone = phone
     #     data.save()
     #     return HttpResponse(status=200)
-
+    @csrf_exempt
     def put(self, request):
         if request.META['CONTENT_TYPE'] == "application/json":
             request = json.loads(request.body)
@@ -57,7 +61,7 @@ class IndexView(View):
         data.phone = phone
         data.save()
         return HttpResponse(status=200)
-
+    @csrf_exempt
     def delete(self, request):
         # data = Member.objects.get(pk=id)
         request = json.loads(request.body)
